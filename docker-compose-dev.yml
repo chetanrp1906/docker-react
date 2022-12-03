@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build:
+      context: . #current working directory - look docker files here
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /home/node/react/node_modules
+      - .:/home/node/react
+  tests:
+    build:
+      context: . #current working directory - look docker files here
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /home/node/react/node_modules #don't user node_modules from local dir
+      - .:/home/node/react #use local file system
+    command: ["npm", "run", "test"]
